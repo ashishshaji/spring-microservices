@@ -12,6 +12,6 @@ public class InventoryServiceImpl implements InventoryService{
     public boolean isInStock(String skuCode) {
 
 
-        return inventoryRepository.findBySkuCodeIn().isPresent();
+        return inventoryRepository.findBySkuCode(skuCode).isPresent();
     }
 }
