@@ -4,6 +4,7 @@ import com.orderservice.orderservice.dto.OrderItemsDto;
 import com.orderservice.orderservice.dto.OrderRequest;
 import com.orderservice.orderservice.entity.Order;
 import com.orderservice.orderservice.entity.OrderItems;
+import com.orderservice.orderservice.feign.InventoryInterface;
 import com.orderservice.orderservice.repository.OrderRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ public class OrderServiceImpl implements OrderService{
 
     @Autowired
     OrderRepo orderRepo;
+    private final InventoryInterface inventoryInterface;
 
     private final WebClient.Builder webClientBuilder;
     @Override
@@ -36,11 +38,16 @@ public class OrderServiceImpl implements OrderService{
         order.setOrderLineItemsList(orderItems);
         // check weather the stocks are available
 
-        Boolean result = webClient.get()
-                .uri("http://inventory-service/api/inventory/ABC")
-                .retrieve() // Corrected method name
-                .bodyToMono(Boolean.class)
-                .block();
+//        Boolean result = webClient.get()
+//                .uri("http://inventory-service/api/inventory/ABC")
+//                .retrieve() // Corrected method name
+//                .bodyToMono(Boolean.class)
+//                .block();
+//        System.out.println(result);
+
+        //using Feign
+
+        Boolean result=inventoryInterface.isInStock("ABC");
         System.out.println(result);
 
 
