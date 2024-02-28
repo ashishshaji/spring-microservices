@@ -7,6 +7,7 @@ import com.orderservice.orderservice.entity.OrderItems;
 import com.orderservice.orderservice.feign.InventoryInterface;
 import com.orderservice.orderservice.repository.OrderRepo;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -16,7 +17,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-
+@Slf4j
 public class OrderServiceImpl implements OrderService{
 
     @Autowired
@@ -48,7 +49,7 @@ public class OrderServiceImpl implements OrderService{
         //using Feign
 
         Boolean result=inventoryInterface.isInStock("ABC");
-        System.out.println(result);
+        log.info("Item in stock : " + result);
 
 
 
