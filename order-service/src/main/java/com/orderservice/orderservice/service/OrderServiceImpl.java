@@ -48,12 +48,16 @@ public class OrderServiceImpl implements OrderService{
 
         //using Feign
 
-        Boolean result=inventoryInterface.isInStock("ABC");
-        log.info("Item in stock : " + result);
+        if(inventoryInterface.isInStock("ABC")){
+            orderRepo.save(order);
+        }
+        else{
+            throw new RuntimeException("Order is not saved");
+        }
 
 
 
-        orderRepo.save(order);
+
 
     }
 
